@@ -1,0 +1,28 @@
+﻿@model Api.Dtos.InvoiceDto;
+
+<h2>Счет на оплату</h2>
+@if (Model.Status == "Pending")
+{
+    @using (Html.BeginForm("Pay", "Payment", FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.Id)
+        <div>
+            @Html.Label("Сумма к оплате:")
+            @Html.EditorFor(m => m.Sum, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        </div>
+        <br/>
+        <div>
+            @Html.Label("Введите номер карты:")
+            @Html.Editor("Введите номер карты:")
+        </div>
+        <p><input type="submit" value="Оплатить" /></p>
+    }
+}
+else if (Model.Status == "Paid")
+{
+    <p>Успешно оплачен. Детали заказа придут в письме.</p>
+}
+else
+{
+    <p>Ссылка на оплату не действительна.</p>
+}
